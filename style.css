@@ -29,36 +29,38 @@ body {
 .container {
   max-width: 768px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 0;
 }
 
 /* ========== 头部 ========== */
 .header {
+  background: #183048;
   text-align: center;
-  padding: 20px 0 12px;
+  padding: 24px 16px 20px;
+}
+.store-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.2);
+  margin-bottom: 10px;
 }
 .header h1 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
-  color: var(--primary-dark);
+  color: #ffffff;
 }
-.subtitle {
+.header .subtitle {
   font-size: 13px;
-  color: var(--text-secondary);
+  color: rgba(255,255,255,0.7);
   margin-top: 4px;
 }
 
-/* ========== Logo区域 ========== */
-.logo-section {
-  text-align: center;
-  padding: 8px 0 16px;
-}
-.store-logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+/* 内容区域恢复 padding */
+.stats-row, .filter-bar, .inventory-list, .logs-section {
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 /* ========== 统计卡片 ========== */
