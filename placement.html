@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>逃跑抄手 · 摆放规范</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 登录遮罩 -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <h2>逃跑抄手 · 摆放规范</h2>
+      <p class="login-sub">请输入密码进入</p>
+      <input type="password" id="loginPwd" placeholder="请输入密码" autocomplete="off">
+      <button class="login-btn" id="loginBtn">进入系统</button>
+      <div class="login-error" id="loginError"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <h1>逃跑抄手 · 摆放规范</h1>
+      <p class="subtitle">货品摆放标准图示，员工扫码即可查看</p>
+    </header>
+
+    <div class="filter-bar">
+      <select class="category-select" id="areaSelect"><option value="">全部区域</option></select>
+    </div>
+
+    <div class="placement-grid" id="placementGrid"><div class="empty-state">加载中...</div></div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/" class="nav-item"><span class="nav-icon">📦</span><span class="nav-label">库存管理</span></a>
+    <a href="/shifts.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-label">班次职责</span></a>
+    <a href="/placement.html" class="nav-item active"><span class="nav-icon">📋</span><span class="nav-label">摆放规范</span></a>
+  </nav>
+
+  <button class="fab" id="fabAdd">+</button>
+
+  <!-- 新增/编辑弹窗 -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header"><h3 id="modalTitle">新增规范</h3><button class="modal-close" id="modalClose">&times;</button></div>
+      <div class="modal-body">
+        <div class="form-group"><label>标题 <span class="required">*</span></label><input type="text" class="form-input" id="pTitle" placeholder="如：冷冻柜摆放标准"></div>
+        <div class="form-group"><label>区域分类</label><input type="text" class="form-input" id="pArea" placeholder="如：后厨 · 冷冻柜" list="areaList"><datalist id="areaList"></datalist></div>
+        <div class="form-group">
+          <label>图片 <span class="required">*</span></label>
+          <div class="upload-area" id="uploadArea">
+            <input type="file" id="fileInput" accept="image/*" style="display:none;">
+            <div class="upload-placeholder" id="uploadPlaceholder">点击选择图片</div>
+            <img class="upload-preview" id="uploadPreview" style="display:none;">
+          </div>
+        </div>
+        <div class="form-group"><label>描述说明</label><textarea class="form-textarea" id="pDesc" rows="3" placeholder="补充说明文字"></textarea></div>
+        <button class="btn-submit type-save" id="btnSave">保存</button>
+        <button class="btn-delete" id="btnDelete" style="display:none;">删除此规范</button>
+        <div class="modal-error" id="modalError"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图片预览 -->
+  <div class="modal-overlay" id="previewOverlay">
+    <div class="preview-wrapper">
+      <button class="preview-close" id="previewClose">&times;</button>
+      <img class="preview-img" id="previewImg" src="" alt="">
+    </div>
+  </div>
+
+  <!-- 确认弹窗 -->
+  <div class="modal-overlay" id="confirmOverlay">
+    <div class="modal modal-confirm">
+      <div class="modal-header"><h3>确认删除</h3><button class="modal-close" id="confirmClose">&times;</button></div>
+      <div class="modal-body">
+        <p class="confirm-text" id="confirmText"></p>
+        <div class="confirm-buttons"><button class="btn-cancel" id="btnCancel">取消</button><button class="btn-danger" id="btnConfirmDelete">确认删除</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="supabase-client.js"></script>
+  <script src="placement.js"></script>
+</body>
+</html>

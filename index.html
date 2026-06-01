@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>逃跑抄手 · 库存管理</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 登录遮罩 -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <h2>逃跑抄手 · 库存管理</h2>
+      <p class="login-sub">请输入密码进入</p>
+      <input type="password" id="loginPwd" placeholder="请输入密码" autocomplete="off">
+      <button class="login-btn" id="loginBtn">进入系统</button>
+      <div class="login-error" id="loginError"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <h1>逃跑抄手 · 库存管理</h1>
+      <p class="subtitle">手机扫码即可出入库，无需安装</p>
+    </header>
+
+    <div class="qrcode-section">
+      <div class="qrcode-wrapper">
+        <div id="qrcode"></div>
+        <p class="qrcode-hint">微信 / 浏览器扫码打开</p>
+        <p class="qrcode-url" id="qrcodeUrl"></p>
+      </div>
+      <button class="btn-toggle-qr" id="btnToggleQr">收起二维码</button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card stat-total"><div class="stat-num" id="statTotal">0</div><div class="stat-label">食材种类</div></div>
+      <div class="stat-card stat-normal"><div class="stat-num" id="statNormal">0</div><div class="stat-label">库存正常</div></div>
+      <div class="stat-card stat-low"><div class="stat-num" id="statLow">0</div><div class="stat-label">库存偏低</div></div>
+      <div class="stat-card stat-empty"><div class="stat-num" id="statEmpty">0</div><div class="stat-label">已缺货</div></div>
+    </div>
+
+    <div class="filter-bar">
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索食材名称...">
+      <select class="category-select" id="categorySelect"><option value="">全部分类</option></select>
+    </div>
+
+    <div class="inventory-list" id="inventoryList"><div class="empty-state">加载中...</div></div>
+
+    <div class="logs-section">
+      <h3>最近操作记录</h3>
+      <div class="logs-list" id="logsList"><div class="log-empty">暂无操作记录</div></div>
+    </div>
+  </div>
+
+  <button class="fab" id="fabAdd" title="新增食材">+</button>
+
+  <!-- 弹窗（与本地版相同） -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header"><h3 id="modalTitle">出入库操作</h3><button class="modal-close" id="modalClose">&times;</button></div>
+      <div class="modal-body">
+        <div class="mode-tabs" id="modeTabs">
+          <button class="mode-tab active" data-mode="stock">出入库</button>
+          <button class="mode-tab" data-mode="edit">编辑信息</button>
+        </div>
+        <div class="modal-item-info" id="modalItemInfo"></div>
+        <div class="mode-panel" id="panelStock">
+          <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="in">入库</button>
+            <button class="tab-btn" data-tab="out">出库</button>
+          </div>
+          <div class="form-group"><label>数量</label><div class="quantity-input-row"><input type="number" class="quantity-input" id="quantityInput" placeholder="请输入数量" min="0.1" step="0.1"><span class="unit-label" id="unitLabel"></span></div></div>
+          <div class="form-group"><label>操作人</label><input type="text" class="operator-input" id="operatorInput" placeholder="请输入姓名"></div>
+          <div class="form-group"><label>备注（选填）</label><input type="text" class="note-input" id="noteInput" placeholder="如：从供应商采购"></div>
+          <div class="quick-btns"><span class="quick-label">快捷数量：</span><button class="quick-btn" data-qty="1">1</button><button class="quick-btn" data-qty="5">5</button><button class="quick-btn" data-qty="10">10</button><button class="quick-btn" data-qty="20">20</button></div>
+        </div>
+        <div class="mode-panel" id="panelEdit" style="display:none;">
+          <div class="form-group"><label>名称 <span class="required">*</span></label><input type="text" class="form-input" id="editName" placeholder="食材名称"></div>
+          <div class="form-group"><label>分类 <span class="required">*</span></label><input type="text" class="form-input" id="editCategory" placeholder="如：肉类" list="categoryList"><datalist id="categoryList"></datalist></div>
+          <div class="form-group"><label>单位 <span class="required">*</span></label><input type="text" class="form-input" id="editUnit" placeholder="如：斤、瓶、袋"></div>
+          <div class="form-group"><label>最低库存阈值</label><input type="number" class="form-input" id="editThreshold" placeholder="低于此值将预警" min="0" step="0.1"></div>
+          <button class="btn-delete" id="btnDelete">删除此食材</button>
+        </div>
+        <button class="btn-submit" id="btnSubmit">确认入库</button>
+        <div class="modal-error" id="modalError"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="confirmOverlay">
+    <div class="modal modal-confirm">
+      <div class="modal-header"><h3>确认删除</h3><button class="modal-close" id="confirmClose">&times;</button></div>
+      <div class="modal-body">
+        <p class="confirm-text" id="confirmText"></p>
+        <div class="confirm-buttons"><button class="btn-cancel" id="btnCancel">取消</button><button class="btn-danger" id="btnConfirmDelete">确认删除</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <nav class="bottom-nav">
+    <a href="/" class="nav-item active"><span class="nav-icon">📦</span><span class="nav-label">库存管理</span></a>
+    <a href="/shifts.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-label">班次职责</span></a>
+    <a href="/placement.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">摆放规范</span></a>
+  </nav>
+
+  <script src="supabase-client.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

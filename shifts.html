@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>逃跑抄手 · 班次职责</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 登录遮罩 -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <h2>逃跑抄手 · 班次职责</h2>
+      <p class="login-sub">请输入密码进入</p>
+      <input type="password" id="loginPwd" placeholder="请输入密码" autocomplete="off">
+      <button class="login-btn" id="loginBtn">进入系统</button>
+      <div class="login-error" id="loginError"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <h1>逃跑抄手 · 班次职责</h1>
+      <p class="subtitle">各时段岗位分工，员工扫码即可查看</p>
+    </header>
+
+    <div class="shifts-list" id="shiftsList"><div class="empty-state">加载中...</div></div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/" class="nav-item"><span class="nav-icon">📦</span><span class="nav-label">库存管理</span></a>
+    <a href="/shifts.html" class="nav-item active"><span class="nav-icon">👥</span><span class="nav-label">班次职责</span></a>
+    <a href="/placement.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">摆放规范</span></a>
+  </nav>
+
+  <button class="fab" id="fabAdd">+</button>
+
+  <!-- 班次弹窗 -->
+  <div class="modal-overlay" id="shiftModal">
+    <div class="modal">
+      <div class="modal-header"><h3 id="shiftModalTitle">新增班次</h3><button class="modal-close" id="shiftModalClose">&times;</button></div>
+      <div class="modal-body">
+        <div class="form-group"><label>班次名称 <span class="required">*</span></label><input type="text" class="form-input" id="shiftName" placeholder="如：早班"></div>
+        <div class="form-group"><label>时间范围</label><input type="text" class="form-input" id="shiftTime" placeholder="如：06:00 - 14:00"></div>
+        <button class="btn-submit type-save" id="btnSaveShift">保存</button>
+        <div class="modal-error" id="shiftModalError"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 职责弹窗 -->
+  <div class="modal-overlay" id="dutyModal">
+    <div class="modal">
+      <div class="modal-header"><h3 id="dutyModalTitle">新增职责</h3><button class="modal-close" id="dutyModalClose">&times;</button></div>
+      <div class="modal-body">
+        <div class="form-group"><label>岗位名称 <span class="required">*</span></label><input type="text" class="form-input" id="dutyRole" placeholder="如：主厨、服务员"></div>
+        <div class="form-group"><label>具体职责 <span class="required">*</span></label><textarea class="form-textarea" id="dutyText" rows="8" placeholder="每行一条职责"></textarea><span class="form-hint">每行一条职责，建议用序号开头</span></div>
+        <button class="btn-submit type-save" id="btnSaveDuty">保存</button>
+        <button class="btn-delete" id="btnDeleteDuty" style="display:none;">删除此职责</button>
+        <div class="modal-error" id="dutyModalError"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 确认弹窗 -->
+  <div class="modal-overlay" id="confirmOverlay">
+    <div class="modal modal-confirm">
+      <div class="modal-header"><h3>确认删除</h3><button class="modal-close" id="confirmClose">&times;</button></div>
+      <div class="modal-body">
+        <p class="confirm-text" id="confirmText"></p>
+        <div class="confirm-buttons"><button class="btn-cancel" id="btnCancel">取消</button><button class="btn-danger" id="btnConfirmDelete">确认删除</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="supabase-client.js"></script>
+  <script src="shifts.js"></script>
+</body>
+</html>
