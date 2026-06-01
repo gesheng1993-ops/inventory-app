@@ -36,25 +36,20 @@ body {
 .header {
   background: #183048;
   text-align: center;
-  padding: 24px 16px 20px;
+  padding: 18px 16px 14px;
 }
 .store-logo {
-  width: 100px;
-  height: 100px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid rgba(255,255,255,0.2);
-  margin-bottom: 10px;
+  border: 2px solid rgba(255,255,255,0.2);
+  margin-bottom: 6px;
 }
 .header h1 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #ffffff;
-}
-.header .subtitle {
-  font-size: 13px;
-  color: rgba(255,255,255,0.7);
-  margin-top: 4px;
 }
 
 /* 内容区域恢复 padding */
@@ -67,28 +62,26 @@ body {
 .stats-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin: 16px 0;
+  gap: 8px;
+  margin: 10px 0;
 }
 .stat-card {
   background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 14px 10px;
+  border-radius: 8px;
+  padding: 10px 6px;
   text-align: center;
   box-shadow: var(--shadow);
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
 }
-.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.stat-card.stat-active { box-shadow: 0 0 0 2px var(--primary); transform: translateY(-2px); }
 .stat-num {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
+  line-height: 1.2;
 }
 .stat-label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
-  margin-top: 2px;
 }
 .stat-total .stat-num { color: #3b82f6; }
 .stat-normal .stat-num { color: var(--success); }
@@ -145,13 +138,11 @@ body {
   display: flex;
   align-items: center;
   overflow: hidden;
-  min-height: 56px;
 }
 .item-card:active { transform: scale(0.98); }
-.item-card:hover { box-shadow: var(--shadow-lg); }
 
 .item-status-bar {
-  width: 4px;
+  width: 3px;
   align-self: stretch;
   flex-shrink: 0;
 }
@@ -162,10 +153,10 @@ body {
 .item-body {
   flex: 1;
   min-width: 0;
-  padding: 12px 14px;
+  padding: 10px 12px;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
 }
 .item-name {
   font-size: 15px;
@@ -178,25 +169,25 @@ body {
   display: inline-block;
   background: #e8ecf0;
   color: var(--primary);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  padding: 1px 8px;
-  border-radius: 4px;
-  width: fit-content;
+  padding: 1px 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 .item-stock {
   text-align: right;
   flex-shrink: 0;
-  padding: 12px 16px 12px 0;
+  padding: 10px 14px 10px 0;
   font-weight: 700;
 }
 .stock-val {
-  font-size: 22px;
+  font-size: 18px;
 }
 .stock-unit {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
-  margin-left: 2px;
+  margin-left: 1px;
 }
 
 /* 桌面端表格 */
@@ -256,18 +247,18 @@ body {
   align-items: center; justify-content: center;
   color: var(--text-secondary);
 }
-.modal-body { padding: 20px; }
+.modal-body { padding: 16px; }
 .modal-item-info {
   background: #f9fafb;
   border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 16px;
-  font-size: 14px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
 }
 .modal-item-info .info-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .modal-item-info .info-row:last-child { margin-bottom: 0; }
 .modal-item-info .info-label { color: var(--text-secondary); }
@@ -275,15 +266,15 @@ body {
 .tab-buttons {
   display: flex;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 .tab-btn {
   flex: 1;
-  padding: 10px;
+  padding: 8px;
   border: 2px solid var(--border);
   border-radius: 8px;
   background: #fff;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -295,13 +286,13 @@ body {
 }
 
 .form-group {
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 .form-group label {
   display: block;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .quantity-input-row {
   display: flex;
@@ -310,51 +301,43 @@ body {
 }
 .quantity-input, .operator-input, .note-input {
   width: 100%;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 15px;
   outline: none;
-  transition: border-color 0.2s;
 }
 .quantity-input:focus, .operator-input:focus, .note-input:focus {
   border-color: var(--primary);
 }
-.unit-label {
-  font-size: 14px;
-  color: var(--text-secondary);
-  flex-shrink: 0;
-}
 
 .quick-btns {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
-.quick-label { font-size: 13px; color: var(--text-secondary); }
+.quick-label { font-size: 12px; color: var(--text-secondary); }
 .quick-btn {
-  padding: 6px 14px;
+  padding: 4px 10px;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: #fff;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
-  transition: all 0.15s;
 }
 .quick-btn:hover { background: #e8ecf0; border-color: var(--primary); }
 
 .btn-submit {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   border: none;
   border-radius: 8px;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   color: #fff;
-  transition: opacity 0.2s;
 }
 .btn-submit:active { opacity: 0.8; }
 .btn-submit.type-in { background: var(--success); }
@@ -370,14 +353,28 @@ body {
 
 /* ========== 操作记录 ========== */
 .logs-section {
-  margin-top: 24px;
-  padding-top: 20px;
+  margin-top: 16px;
+  padding-top: 12px;
   border-top: 1px solid var(--border);
 }
-.logs-section h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
+.logs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 0;
 }
+.logs-section h3 {
+  font-size: 15px;
+}
+.logs-toggle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: transform 0.2s;
+}
+.logs-section.collapsed .logs-toggle { transform: rotate(-90deg); }
+.logs-section.collapsed .logs-list { display: none; }
 .logs-list {
   display: flex;
   flex-direction: column;

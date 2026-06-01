@@ -368,6 +368,12 @@ function refreshAll() { fetchStats(); fetchInventory(); fetchLogs(); }
 async function init() {
   initCategorySelect(el.categorySelect);
   initCategoryDropdown(el.editCategory);
+  // 操作记录折叠
+  var logsSec = document.getElementById('logsSection');
+  var logsTog = document.getElementById('logsToggle');
+  if (logsTog && logsSec) {
+    logsTog.addEventListener('click', function() { logsSec.classList.toggle('collapsed'); });
+  }
   // 统计卡片点击筛选
   el.stats.empty.addEventListener('click', function() { setStatusFilter('empty'); });
   el.stats.low.addEventListener('click', function() { setStatusFilter('low'); });
