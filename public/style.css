@@ -293,6 +293,11 @@ body {
 .quantity-input:focus, .operator-input:focus, .note-input:focus {
   border-color: var(--primary);
 }
+.unit-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
 
 .quick-btns {
   display: flex;
