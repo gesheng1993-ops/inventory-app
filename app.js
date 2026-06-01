@@ -1,4 +1,13 @@
 // ==================== 餐饮库存管理 - Supabase 版 ====================
+var CATEGORIES = ['冻货', '调料', '打包盒及打包用品', '干货类（含辣椒）'];
+
+function initCategorySelect(sel) {
+  sel.innerHTML = '<option value="">全部分类</option>' + CATEGORIES.map(function(c) { return '<option value="' + c + '">' + c + '</option>'; }).join('');
+}
+function initCategoryDropdown(sel) {
+  sel.innerHTML = '<option value="">请选择分类</option>' + CATEGORIES.map(function(c) { return '<option value="' + c + '">' + c + '</option>'; }).join('');
+}
+
 let currentItems = [];
 let currentItem = null;
 let currentType = 'in';
@@ -17,7 +26,7 @@ const el = {
   quantityInput: $('#quantityInput'), unitLabel: $('#unitLabel'), operatorInput: $('#operatorInput'), noteInput: $('#noteInput'),
   btnSubmit: $('#btnSubmit'), modalError: $('#modalError'),
   editName: $('#editName'), editCategory: $('#editCategory'), editUnit: $('#editUnit'), editThreshold: $('#editThreshold'),
-  categoryList: $('#categoryList'), btnDelete: $('#btnDelete'),
+  btnDelete: $('#btnDelete'),
   confirmOverlay: $('#confirmOverlay'), confirmText: $('#confirmText'),
   confirmClose: $('#confirmClose'), btnCancel: $('#btnCancel'), btnConfirmDelete: $('#btnConfirmDelete'),
   toast: $('#toast'), fabAdd: $('#fabAdd'),
@@ -92,13 +101,8 @@ async function fetchInventory() {
   } catch (e) { console.error('inventory:', e); }
 }
 
-async function fetchCategories() {
-  try {
-    const data = await api('/inventory_items?select=category');
-    const cats = [...new Set(data.map(d => d.category))].sort();
-    el.categorySelect.innerHTML = '<option value="">全部分类</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
-    el.categoryList.innerHTML = cats.map(c => `<option value="${c}">`).join('');
-  } catch (e) { console.error('categories:', e); }
+function fetchCategories() {
+  initCategorySelect(el.categorySelect);
 }
 
 async function fetchLogs() {
@@ -129,15 +133,14 @@ function renderInventory() {
     const status = getStatus(item);
     const color = status === 'empty' ? '#ef4444' : status === 'low' ? '#f59e0b' : '#10b981';
     return '<div class="item-card" data-id="' + item.id + '">' +
-      '<div class="status-dot status-' + status + '"></div>' +
-      '<div class="item-info">' +
+      '<div class="item-status-bar status-' + status + '"></div>' +
+      '<div class="item-body">' +
         '<div class="item-name">' + escHtml(item.name) + '</div>' +
-        '<div class="item-meta">' + escHtml(item.category) + ' · 最低阈值 ' + item.min_threshold + ' ' + item.unit + '</div>' +
+        '<span class="category-tag">' + escHtml(item.category) + '</span>' +
       '</div>' +
-      '<div class="item-quantity">' +
-        '<div class="quantity-val" style="color:' + color + '">' + item.quantity + '</div>' +
-        '<div class="quantity-unit">' + item.unit + '</div>' +
-        '<span class="status-badge badge-' + status + '">' + getStatusLabel(status) + '</span>' +
+      '<div class="item-stock" style="color:' + color + '">' +
+        '<span class="stock-val">' + item.quantity + '</span>' +
+        '<span class="stock-unit">' + item.unit + '</span>' +
       '</div></div>';
   }).join('');
   el.inventoryList.querySelectorAll('.item-card').forEach(function(card) {
@@ -209,7 +212,7 @@ function refreshModalUI() {
   }
   if (currentMode === 'edit') {
     if (currentItem) {
-      el.editName.value = currentItem.name; el.editCategory.value = currentItem.category;
+      el.editName.value = currentItem.name; initCategoryDropdown(el.editCategory); el.editCategory.value = currentItem.category;
       el.editUnit.value = currentItem.unit; el.editThreshold.value = currentItem.min_threshold;
       el.btnDelete.style.display = 'block';
     } else {
@@ -363,12 +366,13 @@ function setStatusFilter(status) {
 function refreshAll() { fetchStats(); fetchInventory(); fetchLogs(); }
 
 async function init() {
+  initCategorySelect(el.categorySelect);
+  initCategoryDropdown(el.editCategory);
   // 统计卡片点击筛选
   el.stats.empty.addEventListener('click', function() { setStatusFilter('empty'); });
   el.stats.low.addEventListener('click', function() { setStatusFilter('low'); });
   el.stats.normal.addEventListener('click', function() { setStatusFilter('normal'); });
   el.stats.total.addEventListener('click', function() { setStatusFilter(null); });
-  await fetchCategories();
   refreshAll();
   setInterval(refreshAll, 30000);
 }

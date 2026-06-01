@@ -68,7 +68,7 @@
         </div>
         <div class="mode-panel" id="panelEdit" style="display:none;">
           <div class="form-group"><label>名称 <span class="required">*</span></label><input type="text" class="form-input" id="editName" placeholder="食材名称"></div>
-          <div class="form-group"><label>分类 <span class="required">*</span></label><input type="text" class="form-input" id="editCategory" placeholder="如：肉类" list="categoryList"><datalist id="categoryList"></datalist></div>
+          <div class="form-group"><label>分类 <span class="required">*</span></label><select class="form-input" id="editCategory"><option value="">请选择分类</option></select></div>
           <div class="form-group"><label>单位 <span class="required">*</span></label><input type="text" class="form-input" id="editUnit" placeholder="如：斤、瓶、袋"></div>
           <div class="form-group"><label>最低库存阈值</label><input type="number" class="form-input" id="editThreshold" placeholder="低于此值将预警" min="0" step="0.1"></div>
           <button class="btn-delete" id="btnDelete">删除此食材</button>
