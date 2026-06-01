@@ -120,7 +120,7 @@ body {
 .inventory-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 .empty-state {
   text-align: center;
@@ -131,63 +131,46 @@ body {
 /* 库存卡片（手机端） */
 .item-card {
   background: var(--card-bg);
-  border-radius: var(--radius);
+  border-radius: 8px;
   box-shadow: var(--shadow);
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
   display: flex;
   align-items: center;
   overflow: hidden;
+  height: 40px;
 }
-.item-card:active { transform: scale(0.98); }
+.item-card:active { background: #f9fafb; }
 
 .item-status-bar {
   width: 3px;
-  align-self: stretch;
+  height: 100%;
   flex-shrink: 0;
 }
 .status-normal { background: var(--success); }
 .status-low { background: var(--warning); }
 .status-empty { background: var(--danger); }
 
-.item-body {
+.item-name {
   flex: 1;
   min-width: 0;
-  padding: 10px 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.item-name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
+  padding: 0 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.category-tag {
-  display: inline-block;
-  background: #e8ecf0;
-  color: var(--primary);
-  font-size: 10px;
-  font-weight: 600;
-  padding: 1px 6px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
 .item-stock {
-  text-align: right;
   flex-shrink: 0;
-  padding: 10px 14px 10px 0;
+  padding-right: 14px;
+  font-size: 14px;
   font-weight: 700;
+  white-space: nowrap;
 }
-.stock-val {
-  font-size: 18px;
-}
-.stock-unit {
+.item-stock small {
   font-size: 11px;
   color: var(--text-secondary);
-  margin-left: 1px;
+  font-weight: 400;
 }
 
 /* 桌面端表格 */

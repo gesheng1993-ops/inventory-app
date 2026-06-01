@@ -1,5 +1,5 @@
 // ==================== 餐饮库存管理 - Supabase 版 ====================
-var CATEGORIES = ['冻货', '调料', '打包盒及打包用品', '干货类（含辣椒）'];
+var CATEGORIES = ['冻货', '调料', '打包盒及打包用品', '干货类（含辣椒）', '杂物'];
 
 function initCategorySelect(sel) {
   sel.innerHTML = '<option value="">全部分类</option>' + CATEGORIES.map(function(c) { return '<option value="' + c + '">' + c + '</option>'; }).join('');
@@ -134,14 +134,10 @@ function renderInventory() {
     const color = status === 'empty' ? '#ef4444' : status === 'low' ? '#f59e0b' : '#10b981';
     return '<div class="item-card" data-id="' + item.id + '">' +
       '<div class="item-status-bar status-' + status + '"></div>' +
-      '<div class="item-body">' +
-        '<div class="item-name">' + escHtml(item.name) + '</div>' +
-        '<span class="category-tag">' + escHtml(item.category) + '</span>' +
-      '</div>' +
-      '<div class="item-stock" style="color:' + color + '">' +
-        '<span class="stock-val">' + item.quantity + '</span>' +
-        '<span class="stock-unit">' + item.unit + '</span>' +
-      '</div></div>';
+      '<span class="item-name">' + escHtml(item.name) + '</span>' +
+      '<span class="item-stock" style="color:' + color + '">' +
+        item.quantity + ' <small>' + item.unit + '</small>' +
+      '</span></div>';
   }).join('');
   el.inventoryList.querySelectorAll('.item-card').forEach(function(card) {
     card.addEventListener('click', function() { openModal(parseInt(card.dataset.id)); });
